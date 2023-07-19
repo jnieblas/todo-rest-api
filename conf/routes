@@ -3,4 +3,12 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
+# Get all todos
 GET     /todo                       controllers.TodoListController.getAll
+
+# Get single todo by id
+GET     /todo/:itemId               controllers.TodoListController.getById(itemId: Long)
+
+PUT     /todo/done/:itemId          controllers.TodoListController.markAsDone(itemId: Long)
+
+DELETE  /todo/done                  controllers.TodoListController.deleteAllDone

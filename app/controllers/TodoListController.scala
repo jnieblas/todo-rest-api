@@ -24,4 +24,12 @@ class TodoListController @Inject()(val controllerComponents: ControllerComponent
             Ok(Json.toJson(todoList))
         }
     }
+
+    def getById(itemId: Long): Action[AnyContent] = Action {
+        val foundItem = todoList.find(_.id == itemId)
+        foundItem match {
+            case Some(item) => Ok(Json.toJson(item))
+            case None => NotFound
+        }
+    }
 }
