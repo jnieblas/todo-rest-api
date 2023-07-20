@@ -57,7 +57,6 @@ class TodoListController @Inject() (
   def markAsDone(itemId: Long): Action[AnyContent] = Action {
     val foundItem = todoList.find(_.id == itemId)
 
-
     foundItem match {
       case Some(item: TodoListItem) =>
         val updatedItem = item.copy(isItDone = true)
@@ -65,6 +64,15 @@ class TodoListController @Inject() (
         todoList += updatedItem
         Created(Json.toJson(updatedItem))
       case None => NotFound
+    }
+  }
+
+  def deleteAllDone(): Action[AnyContent] = Action {
+    try {
+      todoList --= todoList.filter(_.isItDone == true)
+      NoContent
+    } catch {
+      case e: Exception => BadRequest("Unable to delete items")
     }
   }
 }
